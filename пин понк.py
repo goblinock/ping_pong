@@ -28,13 +28,13 @@ class Kirpich_player(GameSprite):
         keys = key.get_pressed()
         if keys[K_UP] and self.rect.y > 5:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.y < 400:
+        if keys[K_DOWN] and self.rect.y < 350:
             self.rect.y += self.speed
     def update_l(self):
         keys = key.get_pressed()
         if keys[K_w] and self.rect.y > 5:
             self.rect.y -= self.speed
-        if keys[K_s] and self.rect.y < 400:
+        if keys[K_s] and self.rect.y < 350:
             self.rect.y += self.speed
 
 
@@ -46,12 +46,15 @@ class Kirpich_player(GameSprite):
 
 kirpich1 = Kirpich_player('kirpich1.png', 615, 100, 15, 80, 150)
 kirpich2 = Kirpich_player('kirpich2.png', 5, 100, 15, 80, 150)
-kirpich3 = GameSprite('kirpich3.png', 250, 250, 15, 150, 150)
+kirpich3 = GameSprite('kirpich3.png', 250, 250, 5, 50, 50)
 
 
 
 game = True
 finish = False
+
+speed_x = 5
+speed_y = 5
 
 
 
@@ -72,25 +75,22 @@ while game:
         if e.type == QUIT:
             game = False
 
-                
+        
 
 
 
     if finish != True:
-        # if move_right:
-        #     platform.rect.x += 3
-        # if move_left:
-        #     platform.rect.x -= 3
-        # ball.rect.x += speed_x
-        # ball.rect.y += speed_y
-        # if ball.rect.colliderect(platform.rect):
-        #     speed_y *= -1
-        # if ball.rect.y < 0:
-        #     speed_y *= -1
-        # if ball.rect.x < 0 or ball.rect.x > 450:
-        #     speed_x *= -1
-        # if ball.rect.y > 420:
         window.fill((12, 32, 45))
+        kirpich3.rect.x += speed_x
+        kirpich3.rect.y += speed_y
+
+
+        if kirpich3.rect.y > 450 or kirpich3.rect.y < 0:
+            speed_y *= -1
+    
+        if sprite.collide_rect(kirpich1, kirpich3) or sprite.collide_rect(kirpich2, kirpich3):
+            speed_x *= -1
+        
         kirpich1.reset()
         kirpich1.update()
     
@@ -100,7 +100,7 @@ while game:
 
 
         kirpich3.reset()
-        kirpich3.update()
+        # kirpich3.update()
 #         text = font1.render('Счет:' + str(score), 1, (255, 255, 255))
 #         window.blit(text, (10, 20))
 
